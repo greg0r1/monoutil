@@ -3,412 +3,118 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>monoutil.ovh</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        integrity="sha512-…" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonOutil - Calculs Pratiques et Fun</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #0d9488;
-            --primary-hover: #0b8278;
-            --accent: #f59e0b;
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --text: #0f172a;
-            --radius: .7rem;
-            --shadow: 0 8px 24px rgba(0, 0, 0, .06);
-            --glass-bg: rgb(32 35 35 / 65%);
-            --glass-brd: rgba(255, 255, 255, .4);
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        a {
-            text-decoration: none;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
         }
 
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            background: var(--glass-bg);
-            border-bottom: 1px solid var(--glass-brd);
-            z-index: 100;
+        .animate-card {
+            animation: slideIn 0.5s ease-out;
         }
 
-        header .brand,
-        header .menu a {
-            color: #ffffff;
-        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
 
-        header .menu a:hover {
-            color: var(--accent);
-        }
-
-        /* — Dropdown — */
-        .dropdown {
-            position: relative
-        }
-
-        .dropbtn {
-            background: none;
-            border: none;
-            font: inherit;
-            color: #ffffff;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: .35rem;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            /* collé au bouton – plus de trou */
-            right: 0;
-            min-width: 220px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-brd);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
-            padding: .75rem 0;
-            z-index: 200;
-        }
-
-        .dropdown-content a {
-            display: block;
-            padding: .55rem 1.25rem;
-            color: #ffffff;
-            text-decoration: none;
-            white-space: nowrap;
-            transition: background .25s;
-        }
-
-        .dropdown-content a:hover {
-            background: rgba(255, 255, 255, .08);
-        }
-
-        @media (hover:hover) {
-            .dropdown:hover .dropdown-content {
-                display: block
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
         }
 
-        .show {
-            display: block
-        }
-
-
-        .container {
-            width: 100%;
-            max-width: 1120px;
-            margin: auto;
-            padding: 0 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary);
-            text-decoration: none
-        }
-
-        .menu {
-            display: flex;
-            gap: 2rem
-        }
-
-        .menu a {
-            font-weight: 500;
-            text-decoration: none;
-            color: var(--text);
-            transition: color .25s
-        }
-
-        .menu a:hover {
-            color: var(--primary)
-        }
-
-        .hero {
-            position: relative;
-            background: linear-gradient(100deg, rgba(13, 148, 136, .8), rgba(2, 44, 65, .8)), url('assets/images/calculatrice-teal-ambre.png') center/cover no-repeat;
-            color: #fff;
-            text-align: center;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1.5rem;
-        }
-
-        .hero h1 {
-            font-size: 2.75rem;
-            font-weight: 600;
-            margin-bottom: 1rem
-        }
-
-        .hero p {
-            font-size: 1.15rem;
-            margin-bottom: 2rem
-        }
-
-        .cta {
-            background: #fff;
-            color: var(--primary);
-            padding: .9rem 1.8rem;
-            border-radius: var(--radius);
-            font-weight: 600;
-            text-decoration: none;
-            transition: background .25s, color .25s;
-        }
-
-        .cta:hover {
-            background: var(--primary-hover);
-            color: #fff
-        }
-
-        main {
-            flex: 1
-        }
-
-        /* —— Centrage parfait du bloc —— */
-        .cards-section {
-            display: flex;
-            /* centre le bloc .cards */
-            justify-content: center;
-            align-items: center;
-            /* centré verticalement */
-            min-height: calc(100vh - 72px);
-            padding: 7rem 1.5rem 8rem;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            width: 100%;
-            max-width: 960px;
-            /* largeur maxi du bloc centré */
-            justify-content: center;
-            /* centre les colonnes quand une seule ligne */
-        }
-
-
-        .card {
-            position: relative;
-            overflow: hidden;
-            background: rgba(255, 255, 255, .8);
-            backdrop-filter: blur(14px);
-            border-radius: 1.4rem;
-            padding: 3rem 2.2rem 3.1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1.1rem;
-            transition: transform .35s cubic-bezier(.2, .8, .4, 1), box-shadow .35s;
-            box-shadow: 0 14px 40px rgba(0, 0, 0, .08);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background: linear-gradient(135deg, #0d9488 0%, #54d2c9 50%, #f59e0b 100%);
-            opacity: .15;
-            transition: opacity .35s;
-        }
-
-        .card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 56px rgba(0, 0, 0, .14);
-        }
-
-        .card:hover::before {
-            opacity: .25;
-        }
-
-        .card i {
-            font-size: 2.65rem;
-            padding: .9rem;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%);
-            box-shadow: inset 0 0 4px rgba(0, 0, 0, .08);
-            color: #0d9488;
-        }
-
-        .card h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: .5rem;
-        }
-
-        .card p {
-            font-size: 1.02rem;
-            line-height: 1.6;
-            color: #1e293b;
-        }
-
-
-        .card .btn {
-            margin-top: auto;
-            background: #0d9488;
-            color: #ffffff;
-            padding: .75rem 1.6rem;
-            border-radius: 1rem;
-            font-weight: 600;
-            transition: background .25s;
-        }
-
-        .card .btn:hover {
-            background: #0b8278;
-        }
-
-        .card-tag {
-            font-size: .75rem;
-            text-transform: uppercase;
-            letter-spacing: .05em;
-            background: var(--accent);
-            color: white;
-            padding: .3rem .6rem;
-            border-radius: 999px;
-            margin-bottom: .5rem;
-            font-weight: 600;
-        }
-
-
-
-        .btn {
-            align-self: flex-start;
-            margin-top: 1.75rem;
-        }
-
-        footer {
-            background: var(--surface);
-            padding: 1.75rem 0;
-            text-align: center;
-            font-size: .9rem;
-            color: #64748b;
-            box-shadow: 0 -2px 14px rgba(0, 0, 0, .04);
-        }
-
-        @media(max-width:768px) {
-            .menu {
-                display: none
-            }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
     </style>
 </head>
 
-<body>
-    <header>
-        <div class="container">
-            <a href="/" class="brand">monoutil.ovh</a>
-            <nav class="menu">
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Outils <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                    </button>
-                    <div class="dropdown-content" role="menu">
-                        <a href="https://solderapide.monoutil.ovh" target="_blank" role="menuitem">
-                            Solde de tout&nbsp;compte
-                        </a>
-                        <a href="https://loto-simulateur.monoutil.ovh" target="_blank" role="menuitem">
-                            Simulateur&nbsp;Loto
-                        </a>
-                    </div>
-                </div>
-            </nav>
-
-        </div>
-    </header>
-
-    <section class="hero">
-        <h1>Des calculateurs simples et rapides</h1>
-        <p>Un coup de pouce pratique pour vos démarches quotidiennes.</p>
-        <a href="#outils" class="cta">Découvrir les outils</a>
-    </section>
-
-    <main>
-        <div class="cards-section" id="outils">
-            <div class="container">
-                <div class="cards">
-                    <a href="https://solderapide.monoutil.ovh" target="_blank" class="card"
-                        aria-label="Solde de tout compte">
-                        <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
-                        <span class="card-tag">Calculateur</span>
-                        <h2>Solde de tout&nbsp;compte</h2>
-                        <p>Estimez vos indemnités de fin de contrat en quelques clics : salaire, congés, primes…</p>
-
-                    </a>
-                    <a href="https://loto-simulateur.monoutil.ovh" target="_blank" class="card"
-                        aria-label="Simulateur Loto">
-                        <i class="fas fa-coins" aria-hidden="true"></i>
-                        <span class="card-tag">Calculateur</span>
-                        <h2>Simulateur&nbsp;Loto</h2>
-                        <p>Projetez ce que vous pourriez gagner au loto selon le montant joué et vos numéros favoris.
-                        </p>
-
-                    </a>
-                </div>
+<body class="bg-gradient-to-b from-blue-100 to-gray-50">
+    <!-- Barre de navigation -->
+    <nav class="bg-blue-900 text-white p-4 shadow-lg sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold tracking-tight">MonOutil</h1>
+            <div class="space-x-6 text-lg">
+                <a href="#home" class="hover:text-yellow-300 transition duration-300">Accueil</a>
+                <a href="#tools" class="hover:text-yellow-300 transition duration-300">Outils</a>
+                <a href="#contact" class="hover:text-yellow-300 transition duration-300">Contact</a>
             </div>
         </div>
-    </main>
+    </nav>
 
-    <footer>
-        © <span id="year"></span> monoutil.ovh — Tous droits réservés
+    <!-- Section héroïque -->
+    <section id="home"
+        class="relative bg-gradient-to-r from-blue-700 via-purple-600 to-pink-500 text-white py-24 text-center overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=" 60" height="60" viewBox="0 0 60 60"
+            xmlns="http://www.w3.org/2000/svg" %3E%3Cg fill="none" fill-rule="evenodd" %3E%3Cg fill="%23ffffff"
+            fill-opacity="0.1" %3E%3Cpath
+            d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30v4h-2V4h-4V2h4V-2h2v4h4v2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"
+            /%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-5xl font-extrabold mb-4 tracking-wide animate-pulse">Vos Finances, Simplifiées !</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Explorez les outils de MonOutil pour des calculs financiers
+                rapides, fun et précis.</p>
+            <a href="#tools"
+                class="inline-block bg-yellow-400 text-blue-900 font-bold py-4 px-8 rounded-full hover:bg-yellow-300 transition duration-300 shadow-lg hover:shadow-xl">
+                Découvrir les Outils
+            </a>
+        </div>
+    </section>
+
+    <!-- Section des outils -->
+    <section id="tools" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h3 class="text-4xl font-extrabold text-center text-blue-900 mb-12">Nos Outils Pratiques</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Outil 1 : Calcul loto -->
+                <a href="https://solderapide.monoutil.ovh"
+                    class="block bg-gradient-to-br from-yellow-100 to-yellow-200 p-8 rounded-xl shadow-xl hover:shadow-2xl hover-scale animate-card">
+                    <div class="flex items-center space-x-6">
+                        <i class="fas fa-coins text-5xl text-yellow-600"></i>
+                        <div>
+                            <h4 class="text-2xl font-bold text-blue-900">Revenus au Loto</h4>
+                            <p class="text-gray-700">Découvrez combien vous pourriez gagner avec un ticket chanceux !
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <!-- Outil 2 : Solde de tout compte -->
+                <a href="https://monoutil.ovh/solde-tout-compte"
+                    class="block bg-gradient-to-br from-green-100 to-green-200 p-8 rounded-xl shadow-xl hover:shadow-2xl hover-scale animate-card">
+                    <div class="flex items-center space-x-6">
+                        <i class="fas fa-calculator text-5xl text-green-600"></i>
+                        <div>
+                            <h4 class="text-2xl font-bold text-blue-900">Solde de Tout Compte</h4>
+                            <p class="text-gray-700">Calculez votre indemnité de départ en quelques clics.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <p class="text-center text-gray-600 mt-10 text-lg">Encore plus d'outils en préparation ! Restez connectés !
+            </p>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer id="contact" class="bg-blue-900 text-white py-10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-lg mb-4">Une question ? Contactez-nous : <a href="mailto:contact@monoutil.ovh"
+                    class="underline hover:text-yellow-300 transition duration-300">contact@monoutil.ovh</a></p>
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-2xl hover:text-yellow-300"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-2xl hover:text-yellow-300"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-2xl hover:text-yellow-300"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="text-sm">© 2025 MonOutil. Tous droits réservés.</p>
+        </div>
     </footer>
-
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear()
-    </script>
-    <script>
-        const btn = document.querySelector('.dropbtn');
-        const menu = document.querySelector('.dropdown-content');
-
-        btn.addEventListener('click', e =>
-        {
-            e.preventDefault();
-            menu.classList.toggle('show');
-        });
-
-        document.addEventListener('click', e =>
-        {
-            if (!e.target.closest('.dropdown')) menu.classList.remove('show');
-        });
-    </script>
-
-
 </body>
 
 </html>
